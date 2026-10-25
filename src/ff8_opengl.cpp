@@ -2041,7 +2041,7 @@ static bool ff8_is_widescreen_mode(const struct game_mode *game_mode)
 	return mode == MODE_BATTLE || mode == MODE_WORLDMAP || mode == MODE_SWIRL
 		|| mode == MODE_MENU || mode == MODE_MAIN_MENU
 		|| (ff8_widescreen_after_battle && mode == MODE_AFTER_BATTLE)
-		// Shops run in MODE_TUTO; other unknown modes (e.g. MODE_11 after getting a GF) go black when widened
+		// Shops run in MODE_TUTO; keep the other unknown modes (MODE_5/7/9/11/100) at 4:3
 		|| (ff8_widescreen_unknown_modes && game_mode->mode == FF8_MODE_TUTO);
 }
 
