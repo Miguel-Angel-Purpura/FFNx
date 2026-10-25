@@ -2037,7 +2037,9 @@ int ff8_limit_fps()
 static bool ff8_is_widescreen_mode(uint32_t mode)
 {
 	return mode == MODE_BATTLE || mode == MODE_WORLDMAP || mode == MODE_SWIRL
-		|| mode == MODE_MENU || mode == MODE_MAIN_MENU;
+		|| mode == MODE_MENU || mode == MODE_MAIN_MENU
+		|| (ff8_widescreen_after_battle && mode == MODE_AFTER_BATTLE)
+		|| (ff8_widescreen_unknown_modes && mode == MODE_UNKNOWN);
 }
 
 void ff8_flip(struct game_obj *game_object)
