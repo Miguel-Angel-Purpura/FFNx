@@ -89,7 +89,7 @@ trace_scissor = false
 ff8_widescreen_after_battle = false
 
 #[FF8 WIDESCREEN UNKNOWN MODES]
-# Use the 16:9 viewport on FF8 modes not handled yet (experimental).
+# Use the 16:9 viewport in FF8 shops (MODE_TUTO). Other unknown modes stay 4:3 (MODE_11 went black).
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ff8_widescreen_unknown_modes = false
 

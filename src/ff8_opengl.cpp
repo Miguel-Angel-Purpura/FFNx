@@ -2034,17 +2034,20 @@ int ff8_limit_fps()
 	return 0;
 }
 
-static bool ff8_is_widescreen_mode(uint32_t mode)
+static bool ff8_is_widescreen_mode(const struct game_mode *game_mode)
 {
+	const uint32_t mode = game_mode->driver_mode;
+
 	return mode == MODE_BATTLE || mode == MODE_WORLDMAP || mode == MODE_SWIRL
 		|| mode == MODE_MENU || mode == MODE_MAIN_MENU
 		|| (ff8_widescreen_after_battle && mode == MODE_AFTER_BATTLE)
-		|| (ff8_widescreen_unknown_modes && mode == MODE_UNKNOWN);
+		// Shops run in MODE_TUTO; other unknown modes (e.g. MODE_11 after getting a GF) go black when widened
+		|| (ff8_widescreen_unknown_modes && game_mode->mode == FF8_MODE_TUTO);
 }
 
 void ff8_flip(struct game_obj *game_object)
 {
-	if (widescreen_enabled && !ff8_is_widescreen_mode(getmode_cached()->driver_mode))
+	if (widescreen_enabled && !ff8_is_widescreen_mode(getmode_cached()))
 	{
 		// Cover overflow and retained pixels only after all game geometry has been drawn.
 		gl_draw_sorted_deferred();
@@ -2083,7 +2086,7 @@ void ff8_flip(struct game_obj *game_object)
 
 void* ff8_engine_set_wide_viewport(int x, int y, int w, int h)
 {
-	const bool use_wide_viewport = ff8_is_widescreen_mode(getmode()->driver_mode);
+	const bool use_wide_viewport = ff8_is_widescreen_mode(getmode());
 	const int viewport_x = use_wide_viewport ? wide_viewport_x : x;
 	const int viewport_y = use_wide_viewport ? wide_viewport_y : y;
 	const int viewport_width = use_wide_viewport ? wide_viewport_width : w;
