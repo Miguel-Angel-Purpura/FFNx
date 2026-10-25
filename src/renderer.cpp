@@ -1804,6 +1804,18 @@ void Renderer::setScissor(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
                 // This changes the scissor width and makes it bigger to fit widescreen
                 if(x == 0 && width == game_width)
                     scissorWidth = getInternalCoordX(wide_viewport_width);
+                else if (ff8 && ff8_widescreen_menu_scissor == 1)
+                    scissorOffsetX = getInternalCoordX(x);
+                else if (ff8 && ff8_widescreen_menu_scissor == 2)
+                {
+                    scissorOffsetX = 0;
+                    scissorWidth = getInternalCoordX(wide_viewport_width);
+                }
+                else if (ff8 && ff8_widescreen_menu_scissor == 3)
+                {
+                    scissorOffsetX = 0;
+                    scissorWidth = getInternalCoordX(x + abs(wide_viewport_x) + width);
+                }
                 else
                     scissorOffsetX = getInternalCoordX(x + abs(wide_viewport_x));
 
@@ -1818,6 +1830,17 @@ void Renderer::setScissor(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
                 }
             }
             break;
+    }
+
+    if (trace_scissor)
+    {
+        static uint32_t last[9] = {};
+        uint32_t now[9] = { mode->driver_mode, x, y, width, height, scissorOffsetX, scissorOffsetY, scissorWidth, scissorHeight };
+        if (memcmp(last, now, sizeof(now)) != 0)
+        {
+            memcpy(last, now, sizeof(now));
+            ffnx_info("scissor: mode=%u in=(%d,%d,%d,%d) out=(%u,%u,%u,%u)\n", now[0], (int16_t)x, (int16_t)y, (int16_t)width, (int16_t)height, now[5], now[6], now[7], now[8]);
+        }
     }
 }
 

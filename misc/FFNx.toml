@@ -69,6 +69,20 @@ aspect_ratio = 0
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 enable_uncrop = false
 
+#[FF8 WIDESCREEN MENU SCISSOR]
+# How partial clipping rectangles are handled in FF8 menus (shops, after battle) when 16:9 is enabled.
+# - 0: Default ( offset by the widescreen margin )
+# - 1: No offset
+# - 2: No clipping for partial rectangles
+# - 3: Offset by the widescreen margin and extend to the left screen edge
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ff8_widescreen_menu_scissor = 0
+
+#[TRACE SCISSOR]
+# Log every change of the scissor rectangle with the current game mode.
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+trace_scissor = false
+
 #[ENABLE VSYNC]
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 enable_vsync = true

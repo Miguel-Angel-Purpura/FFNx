@@ -90,6 +90,8 @@ long window_size_y;
 long internal_resolution_scale;
 long aspect_ratio;
 bool enable_uncrop;
+long ff8_widescreen_menu_scissor;
+bool trace_scissor;
 bool fullscreen;
 bool borderless;
 long refresh_rate;
@@ -261,6 +263,8 @@ void read_cfg()
 	internal_resolution_scale = config["internal_resolution_scale"].value_or(0);
 	aspect_ratio = config["aspect_ratio"].value_or(0);
 	enable_uncrop = config["enable_uncrop"].value_or(false);
+	ff8_widescreen_menu_scissor = config["ff8_widescreen_menu_scissor"].value_or(0);
+	trace_scissor = config["trace_scissor"].value_or(false);
 	fullscreen = config["fullscreen"].value_or(false);
 	borderless = config["borderless"].value_or(false);
 	refresh_rate = config["refresh_rate"].value_or(0);
