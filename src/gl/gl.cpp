@@ -314,6 +314,29 @@ void gl_draw_indexed_primitive(uint32_t primitivetype, uint32_t vertextype, stru
 
 	newRenderer.setInterpolationQualifier(current_state.shademode ? RendererInterpolationQualifier::SMOOTH : RendererInterpolationQualifier::FLAT);
 
+	if (trace_scissor && ff8 && vertextype == TLVERTEX && vertexcount > 0 && (mode == MODE_MENU || mode == MODE_AFTER_BATTLE))
+	{
+		static uint32_t trace_lines = 0, draws_left = 0, draws_total = 0;
+		float min_x = vertices[0]._.x, max_x = vertices[0]._.x, min_y = vertices[0]._.y;
+		for (uint32_t v = 1; v < vertexcount; ++v)
+		{
+			if (vertices[v]._.x < min_x) min_x = vertices[v]._.x;
+			if (vertices[v]._.x > max_x) max_x = vertices[v]._.x;
+			if (vertices[v]._.y < min_y) min_y = vertices[v]._.y;
+		}
+		draws_total++;
+		if (min_x < 0.0f)
+		{
+			draws_left++;
+			if (trace_lines < 400)
+			{
+				trace_lines++;
+				ffnx_info("draw-left: mode=%u verts=%u x=[%.1f,%.1f] y=%.1f clip=%u defer_menu=%u\n", mode, vertexcount, min_x, max_x, min_y, clip, (uint32_t)(mode == MODE_MENU));
+			}
+		}
+		if ((draws_total % 20000) == 0) ffnx_info("draw-left: summary total=%u left=%u\n", draws_total, draws_left);
+	}
+
 	// handle some special cases, see special_case.c
 	if(gl_special_case(primitivetype, vertextype, vertices, vertexcount, indices, count, graphics_object, clip, mipmap))
 	{
