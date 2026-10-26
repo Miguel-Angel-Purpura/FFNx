@@ -113,6 +113,8 @@ extern long ff8_widescreen_menu_scissor;
 extern bool trace_scissor;
 extern bool ff8_widescreen_after_battle;
 extern bool ff8_widescreen_unknown_modes;
+extern long ff8_battle_stage_near_divisor;
+extern bool ff8_battle_stage_drop_clamped;
 extern bool fullscreen;
 extern bool borderless;
 extern long refresh_rate;

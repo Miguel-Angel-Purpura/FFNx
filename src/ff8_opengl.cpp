@@ -2170,7 +2170,7 @@ int16_t ff8_battle_world_calc_zoom(int16_t *descriptor, int16_t **vertices, uint
 	{
 		const int vertex_count = *source_begin;
 		const int zoom = ff8_externals.camera_zoom_dword_1CA92E4[0];
-		const int near_guard = zoom / 8;
+		const int near_guard = zoom / ff8_battle_stage_near_divisor;
 		const int clip_left = 8 * descriptor[10];
 		const int clip_top = 8 * descriptor[11];
 		const int clip_right = clip_left + 8 * descriptor[12];
@@ -2200,6 +2200,8 @@ int16_t ff8_battle_world_calc_zoom(int16_t *descriptor, int16_t **vertices, uint
 				{
 					int projected_x = 8 * ff8_externals.word_1CA92DE[0] + static_cast<int>(round(8.0 * precise_x * zoom / projected_z));
 					int projected_y = 8 * ff8_externals.word_1CA92DE[2] + static_cast<int>(round(8.0 * precise_y * zoom / projected_z));
+					// Vertices that land this far away come from geometry almost touching the camera: keep the engine's clip flag so the triangle is dropped instead of drawn as a huge spike
+					if (ff8_battle_stage_drop_clamped && (projected_x < -8192 || projected_x > 8184 || projected_y < -8192 || projected_y > 8184)) continue;
 					if (projected_x < -8192) projected_x = -8192;
 					if (projected_x > 8184) projected_x = 8184;
 					if (projected_y < -8192) projected_y = -8192;

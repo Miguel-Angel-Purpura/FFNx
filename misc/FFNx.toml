@@ -93,6 +93,17 @@ ff8_widescreen_after_battle = false
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ff8_widescreen_unknown_modes = false
 
+#[FF8 BATTLE STAGE NEAR GUARD]
+# 16:9 re-projects battle stage vertices the engine clipped. Vertices closer to the camera than zoom / divisor are left clipped.
+# Lower it (e.g. 2 or 1) if stage pieces close to the camera show up as giant spikes (default 8).
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ff8_battle_stage_near_divisor = 8
+
+#[FF8 BATTLE STAGE DROP CLAMPED]
+# Keep the engine clip flag on re-projected stage vertices that land far outside the screen, so those triangles are dropped instead of stretched.
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ff8_battle_stage_drop_clamped = false
+
 #[ENABLE VSYNC]
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 enable_vsync = true

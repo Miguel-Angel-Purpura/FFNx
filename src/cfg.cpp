@@ -94,6 +94,8 @@ long ff8_widescreen_menu_scissor;
 bool trace_scissor;
 bool ff8_widescreen_after_battle;
 bool ff8_widescreen_unknown_modes;
+long ff8_battle_stage_near_divisor;
+bool ff8_battle_stage_drop_clamped;
 bool fullscreen;
 bool borderless;
 long refresh_rate;
@@ -269,6 +271,9 @@ void read_cfg()
 	trace_scissor = config["trace_scissor"].value_or(false);
 	ff8_widescreen_after_battle = config["ff8_widescreen_after_battle"].value_or(false);
 	ff8_widescreen_unknown_modes = config["ff8_widescreen_unknown_modes"].value_or(false);
+	ff8_battle_stage_near_divisor = config["ff8_battle_stage_near_divisor"].value_or(8);
+	if (ff8_battle_stage_near_divisor < 1) ff8_battle_stage_near_divisor = 1;
+	ff8_battle_stage_drop_clamped = config["ff8_battle_stage_drop_clamped"].value_or(false);
 	fullscreen = config["fullscreen"].value_or(false);
 	borderless = config["borderless"].value_or(false);
 	refresh_rate = config["refresh_rate"].value_or(0);
